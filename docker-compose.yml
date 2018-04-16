@@ -1,0 +1,20 @@
+version: "2.0"
+
+services:
+
+  base_api:
+      container_name: base_api
+      restart: always
+      image: nginx:latest
+      ports:
+          - "180:80"
+      volumes:
+        - ./:/srv/api
+        - ./dockerfiles/site.conf:/etc/nginx/conf.d/default.conf
+      links:
+        - php
+  php:
+      image: php:7-fpm
+      restart: always
+      volumes:
+          - ./:/srv/api
